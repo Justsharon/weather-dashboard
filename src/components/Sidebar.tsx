@@ -3,10 +3,8 @@ import React from "react";
 import { Icon } from "@iconify/react";
 // import classnames from "classnames";
 
-
 interface SidebarProps {
   isOpen: boolean;
-  toggleSidebar?: () => void;
   children?: React.ReactNode;
   className?: string;
 }
@@ -15,53 +13,47 @@ const Sidebar = ({
   children,
   className,
   isOpen,
-  toggleSidebar,
   ...rest
 }: SidebarProps) => {
   return (
     <section
-      className={`bg-[#3f51b5] h-full w-full text-white p-4 transition-transform duration-300 ease-in-out
-         ${isOpen ? "translate-x-0" : "-translate-x-full"}
-          lg:translate-x-0 lg:static lg:block md:translate-x-0 md:relative ${className}`}
+      className={`fixed left-0 top-0 z-50 py-20 flex h-screen min-w-fit flex-col justify-between overflow-auto bg-primaryTheme pb-5 pt-20 hiden md:block dark:bg-gray-900 dark:text-gray-200 transform transition-transform duration-300 ease-in-out
+          ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          md:relative md:translate-x-0 md:block
+        `}
       {...rest}
     >
-      <div className="flex justify-between items-center p-4">
-        <h2 className="text-xl font-semibold">Dashboard</h2>
-        <button onClick={toggleSidebar} className="text-white md:hidden">
-         <Icon icon="charm:menu-hamburger" width="24" height="24" />
-        </button>
-      </div>
-
-      <nav className="mt-8">
-        <ul className="text-sm">
+    
+      <nav className="flex w-full flex-1 flex-col gap-6 px-6 mt-8">
+        <ul className="text-sm flex w-full flex-1 flex-col gap-6 px-6">
           <li>
-            <a href="#"  className="flex items-center justify-start py-2 px-4 m-2 hover:bg-white hover:text-[#3f51b5] hover:rounded-md">
-            <Icon icon="iconamoon:profile-fill" width="24" height="24" className="mr-2" />
-              <span className="ms-3">Dashboard</span>
+            <a href="#"  className="relative flex items-center justify-start gap-1 rounded-lg p-2 text-small-regular text-primary dark:text-gray-200  hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Icon  icon="material-symbols:dashboard"  height="20" />
+              <span className="max-lg:hidden">Dashboard</span>
             </a >
           </li>
           <li>
-            <a href="#"  className="flex items-center justify-start py-2 px-4 m-2 hover:bg-white hover:text-[#3f51b5] hover:rounded-md">
-            <Icon icon="si:projects-alt-fill" width="24" height="24" className="mr-2" />
-             <span className="ms-3">Maps</span>
+            <a href="#"  className="relative flex items-center justify-start gap-1 rounded-lg p-2 text-small-regular text-primary dark:text-gray-200  hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Icon icon="iconoir:maps-arrow"   height="20" />
+              <span className="max-lg:hidden">Maps</span>
             </a >
           </li>
           <li>
-            <a href="#"  className="flex items-center justify-start py-2 px-4 m-2 hover:bg-white hover:text-[#3f51b5] hover:rounded-md">
-              <Icon icon="fa-solid:file-invoice-dollar" width="24" height="24" className="mr-2" />
-              <span className="ms-3">Charts</span>
+            <a href="#"  className="relative flex items-center justify-start gap-1 rounded-lg p-2 text-small-regular text-primary dark:text-gray-200  hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Icon icon="solar:chart-bold"  height="20" />
+              <span className="max-lg:hidden">Charts</span>
             </a >
           </li>
           <li>
-            <a href="#"  className="flex items-center justify-start py-2 px-4 m-2 hover:bg-white hover:text-[#3f51b5] hover:rounded-md">
-            <Icon icon="material-symbols:chat-rounded" width="24" height="24" className="mr-2" />
-              <span className="ms-3">Saved Location</span>
+            <a href="#"  className="relative flex items-center justify-start gap-1 rounded-lg p-2 text-small-regular text-primary dark:text-gray-200  hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Icon icon="mdi:location"  height="20" />
+              <span className="max-lg:hidden">Saved Location</span>
             </a >
           </li>
           <li>
-            <a href="#"  className="flex items-center justify-start py-2 px-4 m-2 hover:bg-white hover:text-[#3f51b5] hover:rounded-md">
-            <Icon icon="material-symbols:chat-rounded" width="24" height="24" className="mr-2" />
-              <span className="ms-3">Air Quality</span>
+            <a href="#"  className="relative flex items-center justify-start gap-1 rounded-lg p-2 text-small-regular text-primary dark:text-gray-200  hover:bg-gray-100 dark:hover:bg-gray-700">
+              <Icon icon="material-symbols:air"  height="20" />
+              <span className="max-lg:hidden">Air Quality</span>
             </a >
           </li>
         </ul>

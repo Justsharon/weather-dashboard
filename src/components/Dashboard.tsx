@@ -15,7 +15,7 @@ export default function Dashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState<boolean>(false);
 
   const toggleSidebar = (): void => {
-    setIsSidebarOpen(!isSidebarOpen);
+    setIsSidebarOpen((prev) => !prev);
   };
 
   const handleSearch = async (city: string) => {
@@ -34,21 +34,17 @@ export default function Dashboard() {
 
   return (
     <div className="flex justify-center items-center h-screen w-full">
+      <Sidebar isOpen={isSidebarOpen} />
+
       <section className="grid h-full w-full grid-cols-12 grid-rows-[auto_1fr]">
         <div className="col-span-full row-span-1 h-full">
-          <TopBar />
+          <TopBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         </div>
         <div className="col-span-full row-span-1 h-full">
           <div className="grid h-full w-full grid-cols-12 grid-rows-12">
-            <div className="col-span-2 row-span-full">
-              <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-            </div>
-            <div className="col-span-10 row-span-full flex justify-center items-center">
+            <div className="col-span-12 md:col-span-10 row-span-full flex justify-center items-center">
               <main className="w-full h-full m-2">
                 <div className="max-w-md mx-auto space-y-4">
-                  <h1 className="text-3xl font-bold text-center mb-8">
-                    Weather Dashboard
-                  </h1>
                   <SearchBar onSearch={handleSearch} isLoading={isLoading} />
 
                   {!isLoading && error && (

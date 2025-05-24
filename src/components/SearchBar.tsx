@@ -16,7 +16,7 @@ export default function SearchBar({onSearch, isLoading}: SearchBarProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="flex gap">
+        <form onSubmit={handleSubmit} className="flex justify-center m-2 gap-2 flex-wrap ">
             <input 
                 type="text" 
                 name="city" 
@@ -24,12 +24,12 @@ export default function SearchBar({onSearch, isLoading}: SearchBarProps) {
                 placeholder="Nairobi" 
                 value={city} 
                 onChange={(e) => setCity(e.target.value)} 
-                className="flex-1 p-2 rounded-lg border focus:outline-none focus:border-[#3f51b5]" 
+                className="flex-1 p-2 rounded-lg border border-b-gray-800 focus:outline-none" 
             />
             <button 
                 type="submit"
                 disabled={isLoading}
-                className="px-4 py-2 bg-[#3f51b5] text-white rounded-lg hover:bg-[#41497f] disabled:bg-gray-400 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-gray-900 text-white rounded-lg hover:bg-gray-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
                 {isLoading ? 'Searching' : 'Search'}
             </button>

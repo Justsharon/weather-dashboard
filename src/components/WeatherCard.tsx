@@ -8,7 +8,7 @@ export default function WeatherCard({ data }: WeatherCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-lg p-6">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold"></h2>
+        <h2 className="text-xl font-bold">{data.name} Today</h2>
         <img
           src={`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
           alt={data.weather[0].description}

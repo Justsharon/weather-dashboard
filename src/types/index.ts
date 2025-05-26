@@ -4,7 +4,10 @@ export interface WeatherData {
     feels_like: number;
     humidity: number;
     pressure: number;
+    temp_min: number;
+    temp_max: number;
   };
+  dt: number
   weather: Array<{
     main: string;
     description: string;
@@ -12,10 +15,26 @@ export interface WeatherData {
   }>;
   wind: {
     speed: number;
+    deg: number;
+    gust: number;
   };
   name: string;
+  timezone: number;
+  sys: {
+    country: string;
+  };
+  dt_txt: string
 }
 
 export interface WeatherError {
   message: string;
+}
+
+export interface WeatherForecastData {
+  list: WeatherData[];
+  city: {
+    name: string;
+    country: string;
+    timezone: number;
+  };
 }

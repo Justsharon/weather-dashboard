@@ -21,7 +21,7 @@ export default function SearchBar({onSearch, isLoading}: SearchBarProps) {
                 type="text" 
                 name="city" 
                 id="city" 
-                placeholder="Nairobi" 
+                placeholder="Dublin" 
                 value={city} 
                 onChange={(e) => setCity(e.target.value)} 
                 className="flex-1 p-2 rounded-lg border border-b-gray-800 focus:outline-none" 

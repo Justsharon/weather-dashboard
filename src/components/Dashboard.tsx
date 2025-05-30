@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import type { WeatherData, WeatherForecastData } from "../types";
+import type {
+  FavoriteLocation,
+  TemperatureUnit,
+  WeatherData,
+  WeatherForecastData,
+} from "../types";
 import { getWeather, getWeatherFiveDayForecast } from "../service/weatherAPI";
 import SearchBar from "./SearchBar";
 import WeatherCard from "./WeatherCard";
@@ -7,6 +12,13 @@ import LoadingSkeleton from "./LoadingSkeleton";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
 import WeatherForecastCard from "./WeatherForecastCard";
+import {
+  addFavorite,
+  getFavorites,
+  getPreferredUnit,
+  removeFavorite,
+} from "../utils/storage";
+import FavoriteList from "./FavoriteList";
 
 export default function Dashboard() {
   const [weather, setWeather] = useState<WeatherData | null>(null);
@@ -15,6 +27,10 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
   const [currentPage, setCurrentPage] = useState<number>(0);
+  const [favorites, setFavorites] = useState<FavoriteLocation[]>(
+    getFavorites()
+  );
+  const [unit, setUnit] = useState<TemperatureUnit>(getPreferredUnit());
   const itemsPerPage: number = 4;
 
   const toggleSidebar = (): void => {
@@ -43,6 +59,21 @@ export default function Dashboard() {
     }
   };
 
+  const handleToggleFavorite = () => {
+    if (!weather) return;
+    const location: FavoriteLocation = {
+      id: weather.name.toLocaleLowerCase(),
+      name: weather.name,
+    };
+
+    if (favorites.some((fav) => fav.id === location.id)) {
+      removeFavorite(location.id);
+      setFavorites(getFavorites());
+    } else {
+      addFavorite(location);
+      setFavorites(getFavorites());
+    }
+  };
   const totalItems = forecast?.list?.length ?? 0;
   const paginatedForecastData = forecast?.list.slice(
     currentPage * itemsPerPage,
@@ -61,7 +92,7 @@ export default function Dashboard() {
           <div className="grid h-full w-full grid-cols-12 grid-rows-12">
             <div className="col-span-12 row-span-full flex justify-center items-center">
               <main className="w-full h-full m-2">
-                <div className="max-w-md mx-auto space-y-4">
+                <div className="space-y-4">
                   {/* search component */}
                   <SearchBar onSearch={handleSearch} isLoading={isLoading} />
                   {!isLoading && error && (
@@ -69,13 +100,33 @@ export default function Dashboard() {
                       {error}
                     </div>
                   )}
-                  {isLoading && <LoadingSkeleton />}
-                  {/* dayly highlights*/}
-                  {!isLoading && weather && <WeatherCard data={weather} />}
                 </div>
+
+                {/* dayly highlights*/}
+
+                <div className="flex items-center gap-2 justify-between w-full">
+                  {isLoading && <LoadingSkeleton />}
+                  {!isLoading && weather && (
+                    <WeatherCard
+                      data={weather}
+                      isFavorite={favorites.some(
+                        (fav) => fav.id === weather.name.toLowerCase()
+                      )}
+                      onToggleFavorite={handleToggleFavorite}
+                    />
+                  )}
+                  <FavoriteList
+                    favorites={favorites}
+                    onSelect={(location) => getWeather(location.name)}
+                    onRemove={(id) => removeFavorite(id)}
+                  />
+                </div>
+
                 {/* forecast data */}
                 <div className="flex flex-col py-4 w-full">
-                  <h2 className="text-xl font-bold text-center">5 day / 3 hour forecast data</h2>
+                  <h2 className="text-xl font-bold ">
+                    5 day / 3 hour forecast data
+                  </h2>
                   {forecast && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 ">
                       {paginatedForecastData?.map((entry) => (
@@ -103,10 +154,11 @@ export default function Dashboard() {
                       className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
                     >
                       Prev
-                    </button> 
-                      <span className="text-sm font-medium">
-                        Page {currentPage + 1} of {Math.ceil(totalItems / itemsPerPage)}
-                      </span>
+                    </button>
+                    <span className="text-sm font-medium">
+                      Page {currentPage + 1} of{" "}
+                      {Math.ceil(totalItems / itemsPerPage)}
+                    </span>
                     <button
                       onClick={() =>
                         setCurrentPage((prev) =>
@@ -115,10 +167,7 @@ export default function Dashboard() {
                             : prev
                         )
                       }
-                      disabled={
-                        (currentPage + 1) * itemsPerPage >=
-                        totalItems
-                      }
+                      disabled={(currentPage + 1) * itemsPerPage >= totalItems}
                       className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
                     >
                       Next

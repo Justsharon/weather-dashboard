@@ -38,3 +38,10 @@ export interface WeatherForecastData {
     timezone: number;
   };
 }
+
+export interface FavoriteLocation {
+  id: string,
+  name: string,
+}
+
+export type TemperatureUnit = 'celsius' | 'fahrenheit';

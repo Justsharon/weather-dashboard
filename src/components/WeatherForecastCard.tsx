@@ -28,19 +28,19 @@ const WeatherForecastCard: React.FC<ForecastCardProps> = ({
   });
 
   return (
-    <div className="bg-white/70 shadow-lg backdrop-blur-sm rounded-2xl p-4 flex flex-col items-center gap-2">
-      <p className="text-sm flex font-medium text-gray-700">{formattedDate}</p>
+    <div className="bg-gray-800 text-white shadow-2xl backdrop-blur-sm rounded-2xl p-4 flex flex-col items-center gap-2">
+      <p className="text-sm flex font-medium ">{formattedDate}</p>
       <img
         src={`https://openweathermap.org/img/wn/${icon}@2x.png`}
         alt={description}
         className="w-12 h-12"
       />
       <p className="text-lg font-semibold">Forecasted temperature: {Math.round(temp)}°C</p>
-      <p className="text-xs text-gray-500 ">{description}</p>
-      <p className="text-xs text-gray-500 ">Forecasted wind speed: {speed}</p>
-      <p className="text-xs text-gray-500">Forecasted pressure: {pressure}</p>
-      <p className="text-xs text-gray-500">Feels like: {feels_like}</p>
-      <p className="text-xs text-gray-500">Forecasted humidity: {humidity}</p>
+      <p className="text-xs ">{description}</p>
+      <p className="text-xs">Forecasted wind speed: {speed}</p>
+      <p className="text-xs">Forecasted pressure: {pressure}</p>
+      <p className="text-xs">Feels like: {feels_like}</p>
+      <p className="text-xs">Forecasted humidity: {humidity}</p>
    
     </div>
   );

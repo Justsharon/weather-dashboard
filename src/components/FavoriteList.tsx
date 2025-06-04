@@ -1,4 +1,4 @@
-import React from "react";
+
 import type { FavoriteLocation } from "../types";
 import { Icon } from "@iconify/react/dist/iconify.js";
 

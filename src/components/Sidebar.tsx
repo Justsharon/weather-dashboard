@@ -59,14 +59,6 @@ const Sidebar = ({ children, className, isOpen, ...rest }: SidebarProps) => {
           <Icon icon="material-symbols:air" height="20" />
           <span className="max-lg:hidden">Air Quality</span>
         </NavLink>
-
-        <NavLink
-          to="/hourly-forecast"
-          className="relative flex items-center justify-start gap-1 rounded-lg p-2 text-small-regular text-primary dark:text-gray-200  hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          <Icon icon="material-symbols:air" height="20" />
-          <span className="max-lg:hidden">Hourly Forecast</span>
-        </NavLink>
       </nav>
       {children && <div className="mt-8 p-4">{children}</div>}
     </section>

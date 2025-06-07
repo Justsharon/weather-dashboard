@@ -6,9 +6,14 @@ export interface WeatherData {
     pressure: number;
     temp_min: number;
     temp_max: number;
+    sea_level: number;
+    grnd_level: number;
   };
-  dt: number
+  visibility: number;
+  base: string;
+  dt: number;
   weather: Array<{
+    id: number;
     main: string;
     description: string;
     icon: string;
@@ -18,12 +23,16 @@ export interface WeatherData {
     deg: number;
     gust: number;
   };
+  rain: {};
+  clouds: {
+    all: number;
+  };
   name: string;
   timezone: number;
   sys: {
     country: string;
   };
-  dt_txt: string
+  dt_txt: string;
 }
 
 export interface WeatherError {
@@ -40,8 +49,29 @@ export interface WeatherForecastData {
 }
 
 export interface FavoriteLocation {
-  id: string,
-  name: string,
+  id: string;
+  name: string;
 }
 
-export type TemperatureUnit = 'celsius' | 'fahrenheit';
+export type TemperatureUnit = "celsius" | "fahrenheit";
+
+export interface AirQualityData {
+  list: [
+    {
+      dt: number
+      main: {
+        aqi: number;
+      };
+      components: {
+        co: number;
+        no: number;
+        no2: number;
+        o3: number;
+        so2: number;
+        pm2_5: number;
+        pm10: number;
+        nh3: number;
+      };
+    }
+  ];
+}

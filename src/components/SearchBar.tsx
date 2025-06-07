@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCity } from "../context/CityContext";
 
 interface SearchBarProps {
     onSearch: (city: string) => void;
@@ -6,7 +6,7 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({onSearch, isLoading}: SearchBarProps) {
-    const [city, setCity] = useState('');
+    const {city, setCity} = useCity();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();

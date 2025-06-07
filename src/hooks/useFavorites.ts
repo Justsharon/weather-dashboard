@@ -3,13 +3,13 @@ import { addFavorite, getFavorites, removeFavorite } from "../utils/storage";
 import type { FavoriteLocation } from "../types";
 
 export function useFavorites() {
-    const [favorites, setFavorites ] = useState<FavoriteLocation[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteLocation[]>([]);
 
-    useEffect(() => {
-        setFavorites(getFavorites)
-    }, [])
+  useEffect(() => {
+    setFavorites(getFavorites);
+  }, []);
 
-     const add = (location: FavoriteLocation) => {
+  const add = (location: FavoriteLocation) => {
     addFavorite(location);
     setFavorites(getFavorites());
   };
@@ -18,7 +18,7 @@ export function useFavorites() {
     removeFavorite(id);
     setFavorites(getFavorites());
   };
-    const isFavorite = (id: string) => favorites.some(fav => fav.id === id);
+  const isFavorite = (id: string) => favorites.some((fav) => fav.id === id);
 
   return { favorites, add, remove, isFavorite };
 }

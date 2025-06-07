@@ -29,11 +29,11 @@ const Sidebar = ({ children, className, isOpen, ...rest }: SidebarProps) => {
         </NavLink>
 
         <NavLink
-          to="/maps"
+          to="/ai-assistance"
           className="relative flex items-center justify-start gap-1 rounded-lg p-2 text-small-regular text-primary dark:text-gray-200  hover:bg-gray-100 dark:hover:bg-gray-700"
         >
           <Icon icon="iconoir:maps-arrow" height="20" />
-          <span className="max-lg:hidden">Maps</span>
+          <span className="max-lg:hidden">Artificial Intelligence</span>
         </NavLink>
 
         <NavLink

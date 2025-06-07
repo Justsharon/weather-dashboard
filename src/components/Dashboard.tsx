@@ -1,47 +1,22 @@
-import { useEffect, useState } from "react";
-import type {
-  FavoriteLocation,
-  TemperatureUnit,
-  WeatherData,
-  WeatherForecastData,
-} from "../types";
-import { getWeather, getWeatherFiveDayForecast } from "../service/weatherAPI";
+import { useState } from "react";
+import type { FavoriteLocation, TemperatureUnit } from "../types";
 import SearchBar from "./SearchBar";
 import WeatherCard from "./WeatherCard";
 import LoadingSkeleton from "./LoadingSkeleton";
 import { getPreferredUnit } from "../utils/storage";
 import { useFavorites } from "../hooks/useFavorites";
 import ForecastList from "./ForecastList";
+import { useWeatherData } from "../hooks/useWeatherData";
+import DashWidget from "./DashWidget";
+import WeatherSummary from "./ai/WeatherSummary";
+import { useCity } from "../context/CityContext";
 
 export default function Dashboard() {
-  const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [forecast, setForecast] = useState<WeatherForecastData | null>(null);
-  const [error, setError] = useState<string>("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { isLoading, searchCity, error, forecast, weather } = useWeatherData();
   const { favorites, add, remove, isFavorite } = useFavorites();
   const [unit, setUnit] = useState<TemperatureUnit>(getPreferredUnit());
 
-  useEffect(() => {
-    getWeather("dublin").then(setWeather).catch(console.error);
-    getWeatherFiveDayForecast("dublin").then(setForecast).catch(console.error);
-  }, []);
-
-  const handleSearch = async (city: string) => {
-    try {
-      setIsLoading(true);
-      setError("");
-      const data = await getWeather(city);
-      const data1 = await getWeatherFiveDayForecast(city);
-      setWeather(data);
-      setForecast(data1);
-    } catch (error) {
-      setError(error instanceof Error ? error.message : "An error occured");
-      setWeather(null);
-      setForecast(null);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+   const { city } = useCity();
 
   const handleToggleFavorite = () => {
     if (!weather) return;
@@ -57,15 +32,23 @@ export default function Dashboard() {
     }
   };
 
+  const list = forecast?.list.slice(0, 8);
+  const labels = list?.map((e) => e.dt_txt.split(" ")[1].slice(0, 5));
+  const temperatureData = list?.map((e) => e.main.temp);
+  const feelsLikeData = list?.map((e) => e.main.feels_like);
+  const minTempData = list?.map((e) => e.main.temp_min);
+  const maxTempData = list?.map((e) => e.main.temp_max);
+
   return (
     <main className="w-full h-full m-2">
       <div className="space-y-4">
-        <SearchBar onSearch={handleSearch} isLoading={isLoading} />
+        <SearchBar onSearch={searchCity} isLoading={isLoading} />
         {!isLoading && error && (
           <div className="p-4 bg-red-100 text-red-700 rounded-lg">{error}</div>
         )}
       </div>
 
+      <WeatherSummary city={city} weather={weather} />
       <div className="w-full mb-4">
         {isLoading && <LoadingSkeleton />}
         {!isLoading && weather && (
@@ -78,6 +61,91 @@ export default function Dashboard() {
             onToggleFavorite={handleToggleFavorite}
           />
         )}
+      </div>
+      <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <DashWidget
+          title="Temperature Trend"
+          type="line"
+          data={{
+            labels,
+            datasets: [
+              {
+                label: "Temp (°C)",
+                data: list?.map((e) => e.main.temp),
+                borderColor: "red",
+                tension: 0.3,
+              },
+            ],
+          }}
+        />
+
+        <DashWidget
+          title="Humidity Levels"
+          type="bar"
+          data={{
+            labels,
+            datasets: [
+              {
+                label: "Humidity (%)",
+                data: list?.map((e) => e.main.humidity),
+                backgroundColor: "blue",
+              },
+            ],
+          }}
+        />
+
+        <DashWidget
+          title="Temperature Forecast"
+          type="line"
+          data={{
+            labels,
+            datasets: [
+              {
+                label: "Temperature",
+                data: temperatureData,
+                borderColor: "#60a5fa",
+                fill: false,
+              },
+              {
+                label: "Feels Like",
+                data: feelsLikeData,
+                borderColor: "#fbbf24",
+                fill: false,
+              },
+              {
+                label: "Min Temp",
+                data: minTempData,
+                borderColor: "#10b981",
+                borderDash: [5, 5],
+                fill: false,
+              },
+              {
+                label: "Max Temp",
+                data: maxTempData,
+                borderColor: "#ef4444",
+                borderDash: [5, 5],
+                fill: false,
+              },
+            ],
+          }}
+        />
+
+        <DashWidget
+          title="Cloudiness"
+          type="scatter"
+          data={{
+            datasets: [
+              {
+                label: "Clouds (%)",
+                data: list?.map((e, i) => ({
+                  x: i,
+                  y: e.clouds.all,
+                })),
+                backgroundColor: "gray",
+              },
+            ],
+          }}
+        />
       </div>
       {forecast && <ForecastList forecast={forecast} itemsPerPage={4} />}
     </main>

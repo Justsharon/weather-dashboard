@@ -1,8 +1,11 @@
 import React from 'react'
+import ChartDisplay from "../charts/ChartDisplay";
 
 const Charts = () => {
   return (
-    <div>Charts</div>
+   
+
+<ChartDisplay />
   )
 }
 

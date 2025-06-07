@@ -18,8 +18,8 @@ export default function WeatherCard({
     return `${Math.round(temp)}°${unit === "celsius" ? "C" : "F"}`;
   };
   return (
-    <div className="bg-gray-800 rounded-lg shadow-2xl p-6 w-full flex justify-between gap-2">
-      <div className="bg-white/20 rounded-lg p-4 w-1/3 ">
+    <div className="flex justify-between gap-2">
+      <div className="bg-gray-800 rounded-lg p-4 w-1/3 ">
         <div className="flex justify-between">
           <div className="">
             <h2 className="text-xl text-white font-bold">{data.name}</h2>
@@ -64,7 +64,7 @@ export default function WeatherCard({
         </div>
       </div>
 
-      <div className="bg-white/20 rounded-lg p-4 w-1/3">
+      <div className="bg-gray-800 rounded-lg p-4 w-1/3">
         <div className="flex items-center justify-between p-2 text-white">
           <p>Feels like: {Math.round(data.main.feels_like)}°C</p>
           <Icon icon="carbon:temperature" width="48" height="48" />
@@ -76,7 +76,7 @@ export default function WeatherCard({
         </div>
       </div>
 
-      <div className="bg-white/20 rounded-lg p-4 w-1/3">
+      <div className="bg-gray-800 rounded-lg p-4 w-1/3">
         <div className="flex items-center justify-between p-2 text-white">
           <p className="text-white">Wind: {data.wind.speed} m/s</p>
           <Icon icon="arcticons:uv-index" width="48" height="48" />

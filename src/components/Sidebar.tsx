@@ -8,7 +8,7 @@ interface SidebarProps {
   className?: string;
 }
 
-const Sidebar = ({ children, className, isOpen, ...rest }: SidebarProps) => {
+const Sidebar = ({ children, isOpen, ...rest }: SidebarProps) => {
   return (
     <section
   className={`fixed left-0 top-0 bottom-0 z-50 flex min-w-fit flex-col justify-between bg-primaryTheme dark:bg-gray-900 dark:text-gray-200 transform transition-transform duration-300 ease-in-out
@@ -28,13 +28,6 @@ const Sidebar = ({ children, className, isOpen, ...rest }: SidebarProps) => {
           <span className="max-lg:hidden">Dashboard</span>
         </NavLink>
 
-        <NavLink
-          to="/ai-assistance"
-          className="relative flex items-center justify-start gap-1 rounded-lg p-2 text-small-regular text-primary dark:text-gray-200  hover:bg-gray-100 dark:hover:bg-gray-700"
-        >
-          <Icon icon="iconoir:maps-arrow" height="20" />
-          <span className="max-lg:hidden">Artificial Intelligence</span>
-        </NavLink>
 
         <NavLink
           to="/charts"

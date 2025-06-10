@@ -8,15 +8,15 @@ import { useFavorites } from "../hooks/useFavorites";
 import ForecastList from "./ForecastList";
 import { useWeatherData } from "../hooks/useWeatherData";
 import DashWidget from "./DashWidget";
-import WeatherSummary from "./ai/WeatherSummary";
-import { useCity } from "../context/CityContext";
+
+
 
 export default function Dashboard() {
   const { isLoading, searchCity, error, forecast, weather } = useWeatherData();
   const { favorites, add, remove, isFavorite } = useFavorites();
   const [unit, setUnit] = useState<TemperatureUnit>(getPreferredUnit());
 
-   const { city } = useCity();
+ 
 
   const handleToggleFavorite = () => {
     if (!weather) return;
@@ -48,7 +48,7 @@ export default function Dashboard() {
         )}
       </div>
 
-      <WeatherSummary city={city} weather={weather} />
+     
       <div className="w-full mb-4">
         {isLoading && <LoadingSkeleton />}
         {!isLoading && weather && (

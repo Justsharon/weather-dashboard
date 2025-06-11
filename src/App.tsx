@@ -12,21 +12,7 @@ export default function App() {
     setIsSidebarOpen((prev) => !prev);
   };
   return (
-    // <div className="flex justify-center items-center h-screen w-full">
-    //   <Sidebar isOpen={isSidebarOpen} />
-    //   <section className="grid h-full w-full grid-cols-12 grid-rows-[auto_1fr]">
-    //     <div className="col-span-full row-span-1 h-full">
-    //       <TopBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-    //     </div>
-    //     <div className="col-span-full row-span-1 h-full">
-    //       <div className="grid h-full w-full grid-cols-12 grid-rows-12">
-    //         <div className="col-span-12 row-span-full flex justify-center items-center">
-    //           <Outlet />
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </section>
-    // </div>
+    
     <div className="flex h-screen w-full overflow-hidden">
       <Sidebar isOpen={isSidebarOpen} />
       <section className="flex flex-col flex-1 h-full overflow-hidden">

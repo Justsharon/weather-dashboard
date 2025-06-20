@@ -21,7 +21,7 @@ export default function App() {
         </div>
         <div className="flex-1 overflow-y-auto p-4">
           <div className="grid h-full w-full grid-cols-12 grid-rows-12">
-            <div className="col-span-12 row-span-full flex justify-center items-center">
+            <div className="col-span-12 row-span-full">
               <Outlet />
             </div>
           </div>

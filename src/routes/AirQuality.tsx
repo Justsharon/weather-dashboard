@@ -1,11 +1,14 @@
 import { useAirQuality } from "../hooks/useAirQuality";
 import WeatherWidget from "../components/WeatherWidget";
+import { useWeatherData } from "../hooks/useWeatherData";
 
 const AQI_LABELS = ["Good", "Fair", "Moderate", "Poor", "Very Poor"];
 const AQI_COLORS = ["#34d399", "#60a5fa", "#fbbf24", "#f97316", "#ef4444"];
 
 const AirQuality = () => {
   const { airQualityData, isLoading, error } = useAirQuality("Dublin");
+  const { forecast } = useWeatherData();
+  if (!forecast) return <p>No forecast data</p>;
   if (isLoading) return <p>Loading...</p>;
   if (error || !airQualityData)
     return <p>Error: {error || "No data available"}</p>;
@@ -22,69 +25,97 @@ const AirQuality = () => {
 
   return (
     <div className="p-4 space-y-6">
-      <div className="p-4 bg-white rounded shadow flex flex-col items-center">
-        <h2 className="text-lg font-bold">Air Quality Index</h2>
-        <div
-          className="text-4xl font-bold"
-          style={{ color: AQI_COLORS[aqi - 1] }}
-        >
+      <div className="flex items-center justify-center">
+        <h2 className="text-lg font-bold mr-2">
+          Air Quality Index for {forecast.city.name}:{" "}
+        </h2>
+        <p className="text-lg font-bold" style={{ color: AQI_COLORS[aqi - 1] }}>
           {aqi} - {AQI_LABELS[aqi - 1]}
-        </div>
+        </p>
+      </div>
+    <div className="text-sm text-gray-700 space-y-2 leading-relaxed">
+  <p>
+    The Air Quality Index (AQI) is a scale used to indicate how clean or polluted the air is, with an emphasis on its impact on human health. OpenWeather’s AQI levels range from <span className="font-medium text-green-600">1 (Good)</span> to <span className="font-medium text-red-600">5 (Very Poor)</span>, based on the concentration of specific air pollutants.
+  </p>
+
+  <ol className="list-disc pl-5 space-y-1">
+    <li>
+      Pollutants monitored: SO₂ (sulfur dioxide), NO₂ (nitrogen dioxide), PM10, PM2.5 (particulate matter), O₃ (ozone), and CO (carbon monoxide).
+    </li>
+    <li>
+      AQI Levels:
+      <span className="block pl-4">
+        <span className="text-green-600">1 – Good</span>, 
+        <span className="text-yellow-500"> 2 – Fair</span>, 
+        <span className="text-orange-500"> 3 – Moderate</span>, 
+        <span className="text-red-500"> 4 – Poor</span>, 
+        <span className="text-purple-700"> 5 – Very Poor</span>
+      </span>
+    </li>
+    <li>
+      Lower index levels indicate cleaner air with minimal health risks, while higher levels signal increasing pollution and health hazards.
+    </li>
+    <li>
+      NH₃ (ammonia) and NO (nitric oxide) are also monitored but are not included in AQI scoring.
+    </li>
+  </ol>
+</div>
+
+      <div className="grid lg:grid-cols-2 gap-4">
+        <WeatherWidget
+          title="Pollutant Composition"
+          type="pie"
+          data={{
+            labels: ["PM2.5", "PM10", "CO", "NO₂", "O₃", "SO₂"],
+            datasets: [
+              {
+                data: [
+                  fineParticles,
+                  coarseParticle,
+                  carbonMonoxide,
+                  nitrogenMonoxide,
+                  ozone,
+                  sulphurDioxide,
+                ],
+                backgroundColor: [
+                  "#f87171",
+                  "#fbbf24",
+                  "#34d399",
+                  "#60a5fa",
+                  "#a78bfa",
+                  "#f472b6",
+                ],
+              },
+            ],
+          }}
+        />
+
+        <WeatherWidget
+          title="Pollutant Levels (μg/m³)"
+          type="bar"
+          data={{
+            labels: ["PM2.5", "PM10", "CO", "NO", "NO₂", "O₃", "SO₂", "NH₃"],
+            datasets: [
+              {
+                label: "μg/m³",
+                data: [
+                  fineParticles,
+                  coarseParticle,
+                  carbonMonoxide,
+                  nitrogenMonoxide,
+                  nitrogenDioxide,
+                  ozone,
+                  sulphurDioxide,
+                  ammonia,
+                ],
+                backgroundColor: "#60a5fa",
+              },
+            ],
+          }}
+        />
       </div>
 
-      <WeatherWidget
-        title="Pollutant Composition"
-        type="pie"
-        data={{
-          labels: ["PM2.5", "PM10", "CO", "NO₂", "O₃", "SO₂"],
-          datasets: [
-            {
-              data: [
-                fineParticles,
-                coarseParticle,
-                carbonMonoxide,
-                nitrogenMonoxide,
-                ozone,
-                sulphurDioxide,
-              ],
-              backgroundColor: [
-                "#f87171",
-                "#fbbf24",
-                "#34d399",
-                "#60a5fa",
-                "#a78bfa",
-                "#f472b6",
-              ],
-            },
-          ],
-        }}
-      />
-
-      <WeatherWidget
-        title="Pollutant Levels (μg/m³)"
-        type="bar"
-        data={{
-          labels: ["PM2.5", "PM10", "CO", "NO", "NO₂", "O₃", "SO₂", "NH₃"],
-          datasets: [
-            {
-              label: "μg/m³",
-              data: [
-                fineParticles,
-                coarseParticle,
-                carbonMonoxide,
-                nitrogenMonoxide,
-                nitrogenDioxide,
-                ozone,
-                sulphurDioxide,
-                ammonia,
-              ],
-              backgroundColor: "#60a5fa",
-            },
-          ],
-        }}
-      />
-
-      <div className="p-4 bg-white rounded shadow">
+      <div className="p-4 bg-white rounded shadow text-sm ">
         <h3 className="text-lg font-semibold mb-2">
           Learn More About Air Pollution
         </h3>

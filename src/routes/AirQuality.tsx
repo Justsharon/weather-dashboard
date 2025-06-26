@@ -11,7 +11,7 @@ const AirQuality = () => {
    const { city } = useCity(); 
   const { airQualityData, isLoading, error } = useAirQuality(city);
   const { forecast } = useWeatherData(city);
-  if (!forecast) return <p>No forecast data</p>;
+  if (!forecast) return <LoadingSkeleton />;
  
   if (error || !airQualityData)
     return <p>Error: {error || "No data available"}</p>;

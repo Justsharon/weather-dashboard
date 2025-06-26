@@ -25,7 +25,7 @@ export default function FavoriteList({
     return (
       <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
         <Icon icon="ph:map-pin-line-light" width={48} height={48} />
-        <p className="mt-2 text-sm">No favorite locations yet.</p>
+        <p className="mt-2 text-sm">No favorite locations has been added yet.</p>
         <p className="text-xs text-gray-400">
           Add one from the main weather dashboard view
         </p>

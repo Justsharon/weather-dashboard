@@ -30,7 +30,7 @@ const ChartDisplay = () => {
   const { forecast, isLoading, error } = useWeatherData(city);
  
   if (error) return <p className="text-red-500">{error}</p>;
-  if (!forecast) return <p>No forecast data</p>;
+  if (!forecast) return <LoadingSkeleton />;
 
   const list = forecast.list;
   const labels = list.map((e) => e.dt_txt);

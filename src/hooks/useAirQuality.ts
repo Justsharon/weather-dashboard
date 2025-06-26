@@ -13,8 +13,8 @@ export const useAirQuality = (city: string) => {
     const fetchAirQuality = async () => {
       try {
         setIsLoading(true);
-        const coords = await getCityCoordinates(city);
-console.log("Geocoded Coordinates:", coords);
+        // const coords = await getCityCoordinates(city);
+       
         const {lat, lon} = await getCityCoordinates(city)
         const airQuality = await getAirQuality(lat, lon);
         setAirQualityData(airQuality);
@@ -25,7 +25,9 @@ console.log("Geocoded Coordinates:", coords);
       }
     };
 
-    fetchAirQuality()
+    if (city.trim()) {
+      fetchAirQuality();
+    }
   }, [city]);
 
   return {airQualityData, isLoading, error}

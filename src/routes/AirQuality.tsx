@@ -1,15 +1,18 @@
 import { useAirQuality } from "../hooks/useAirQuality";
 import WeatherWidget from "../components/WeatherWidget";
 import { useWeatherData } from "../hooks/useWeatherData";
+import { useCity } from "../context/CityContext";
+import LoadingSkeleton from "../components/LoadingSkeleton";
 
 const AQI_LABELS = ["Good", "Fair", "Moderate", "Poor", "Very Poor"];
 const AQI_COLORS = ["#34d399", "#60a5fa", "#fbbf24", "#f97316", "#ef4444"];
 
 const AirQuality = () => {
-  const { airQualityData, isLoading, error } = useAirQuality("Dublin");
-  const { forecast } = useWeatherData();
+   const { city } = useCity(); 
+  const { airQualityData, isLoading, error } = useAirQuality(city);
+  const { forecast } = useWeatherData(city);
   if (!forecast) return <p>No forecast data</p>;
-  if (isLoading) return <p>Loading...</p>;
+ 
   if (error || !airQualityData)
     return <p>Error: {error || "No data available"}</p>;
 
@@ -25,6 +28,7 @@ const AirQuality = () => {
 
   return (
     <div className="p-4 space-y-6">
+       {isLoading && <LoadingSkeleton />}
       <div className="flex items-center justify-center">
         <h2 className="text-lg font-bold mr-2">
           Air Quality Index for {forecast.city.name}:{" "}
@@ -115,7 +119,7 @@ const AirQuality = () => {
         />
       </div>
 
-      <div className="p-4 bg-white rounded shadow text-sm ">
+      <div className="p-4  text-sm ">
         <h3 className="text-lg font-semibold mb-2">
           Learn More About Air Pollution
         </h3>

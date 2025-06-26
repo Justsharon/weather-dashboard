@@ -7,9 +7,12 @@ export const useWeatherData = (city: string = "dublin") => {
   const [forecast, setForecast] = useState<WeatherForecastData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  
   useEffect(() => {
-    searchCity(city);
-  }, []);
+     if (city.trim()) {
+      searchCity(city);
+    }
+  }, [city]);
 
   const searchCity = async (city: string) => {
     try {

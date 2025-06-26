@@ -18,12 +18,6 @@ const TopBar: React.FC<TopbarProps> = ({isSidebarOpen, toggleSidebar}) => {
         <p className="hidden md:block font-bold text-xl text-gray-900">Weather Dashboard</p>
         <Hamburger isOpen={isSidebarOpen} onClick={toggleSidebar} />
       </nav>
-      {/* <div className="flex items-center space-x-4">
-        <span className="text-sm text-gray-500">Logged in</span>
-        <button className="bg-gray-900 text-sm text-white px-3 py-1 rounded hover:bg-blue-600">
-          Logout
-        </button>
-      </div> */}
     </header>
   );
 };

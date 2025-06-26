@@ -34,7 +34,7 @@ export default function FavoriteList({
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 w-full ">
+    <div className="bg-slate-100 rounded-lg shadow-lg p-6 w-full ">
       <h3 className=" font-medium text-gray-800 mb-4">Favorite Locations</h3>
       <div className="grid grid-cols-2 gap-2">
         <AnimatePresence>
@@ -45,7 +45,7 @@ export default function FavoriteList({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="group flex items-center gap-1 bg-white rounded-full px-3"
+              className="group flex items-center justify-between gap-1 bg-gray-50 rounded-full px-3"
             >
               <button
                 onClick={() => handleSelect(location)}

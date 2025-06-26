@@ -28,7 +28,7 @@ const WeatherForecastCard: React.FC<ForecastCardProps> = ({
   });
 
   return (
-    <div className="bg-gray-800 text-white shadow-2xl backdrop-blur-sm rounded-2xl p-4 flex flex-col items-center gap-2">
+    <div className="bg-slate-100 text-slate-800 shadow-sm backdrop-blur-sm rounded-2xl p-4 flex flex-col items-center gap-2">
       <p className="text-sm flex font-medium ">{formattedDate}</p>
       <img
         src={`https://openweathermap.org/img/wn/${icon}@2x.png`}

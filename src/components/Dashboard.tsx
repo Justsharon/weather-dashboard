@@ -16,8 +16,6 @@ export default function Dashboard() {
   const { favorites, add, remove, isFavorite } = useFavorites();
   const [unit, setUnit] = useState<TemperatureUnit>(getPreferredUnit());
 
- 
-
   const handleToggleFavorite = () => {
     if (!weather) return;
     const location: FavoriteLocation = {
@@ -48,7 +46,6 @@ export default function Dashboard() {
         )}
       </div>
 
-     
       <div className="w-full mb-4">
         {isLoading && <LoadingSkeleton />}
         {!isLoading && weather && (

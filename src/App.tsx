@@ -16,10 +16,10 @@ export default function App() {
     <div className="flex h-screen w-full overflow-hidden">
       <Sidebar isOpen={isSidebarOpen} />
       <section className="flex flex-col flex-1 h-full overflow-hidden">
-        <div className="h-16 w-full shrink-0  bg-white">
+        <div className="h-16 w-full shrink-0  bg-slate-50">
           <TopBar isSidebarOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         </div>
-        <div className="flex-1 overflow-y-auto p-4">
+        <div className="flex-1 overflow-y-auto p-4 bg-slate-50">
           <div className="grid h-full w-full grid-cols-12 grid-rows-12">
             <div className="col-span-12 row-span-full">
               <Outlet />

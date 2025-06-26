@@ -11,7 +11,7 @@ interface SidebarProps {
 const Sidebar = ({ children, isOpen, ...rest }: SidebarProps) => {
   return (
     <section
-  className={`fixed left-0 top-0 bottom-0 z-50 flex min-w-fit flex-col justify-between bg-primaryTheme dark:bg-gray-900 dark:text-gray-200 transform transition-transform duration-300 ease-in-out
+  className={`fixed left-0 top-0 bottom-0 z-50 flex min-w-fit flex-col justify-between bg-slate-800 transform transition-transform duration-300 ease-in-out
     ${isOpen ? "translate-x-0" : "-translate-x-full"}
     md:relative md:translate-x-0 md:block
     h-screen overflow-y-auto

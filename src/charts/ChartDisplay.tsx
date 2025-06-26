@@ -1,5 +1,5 @@
 import { useWeatherData } from "../hooks/useWeatherData";
-import { Line, Bar, Pie, Scatter } from "react-chartjs-2";
+import { Line, Bar, Pie} from "react-chartjs-2";
 import {
   Chart as ChartJS,
   LineElement,
@@ -11,6 +11,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useCity } from "../context/CityContext";
+import LoadingSkeleton from "../components/LoadingSkeleton";
 
 ChartJS.register(
   LineElement,
@@ -24,9 +26,9 @@ ChartJS.register(
 );
 
 const ChartDisplay = () => {
-  const { forecast, isLoading, error } = useWeatherData();
-
-  if (isLoading) return <p>Loading...</p>;
+  const { city } = useCity();
+  const { forecast, isLoading, error } = useWeatherData(city);
+ 
   if (error) return <p className="text-red-500">{error}</p>;
   if (!forecast) return <p>No forecast data</p>;
 
@@ -35,9 +37,6 @@ const ChartDisplay = () => {
 
   const temps = list.map((e) => e.main.temp);
   const feelsLike = list.map((e) => e.main.feels_like);
-  // const minTemp = list.map((e) => e.main.temp_min);
-  // const maxTemp = list.map((e) => e.main.temp_max);
-
   const humidity = list.map((e) => e.main.humidity);
   const seaLevel = list.map((e) => e.main.sea_level || 0);
   const grndLevel = list.map((e) => e.main.grnd_level || 0);
@@ -47,12 +46,9 @@ const ChartDisplay = () => {
 
   const windDeg = list.map((e) => e.wind.deg);
 
-  // const cloudData = list.map((e) => ({
-  //   x: e.dt_txt,
-  //   y: e.clouds.all,
-  // }));
   return (
     <section>
+      {isLoading && <LoadingSkeleton />}
       <h2 className="text-xl font-bold text-center">
         6 hour Weather Charts for {forecast.city.name}'s 5 day forecast'
       </h2>

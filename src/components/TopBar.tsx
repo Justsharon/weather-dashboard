@@ -9,7 +9,7 @@ interface TopbarProps {
 const TopBar: React.FC<TopbarProps> = ({isSidebarOpen, toggleSidebar}) => {
   return (
     <header className="bg-white shadow p-4 flex justify-end items-center">
-      <nav className="flex items-end space-x-2">
+      <nav className="flex items-center space-x-2">
         <Icon
           icon="arcticons:mjweather"
           height="24"
